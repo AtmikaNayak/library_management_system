@@ -35,7 +35,7 @@ a:hover {
     align-items: center;
     min-height: 100vh;
     padding: 20px;
-    background-image: url('bg.png');
+    background-image: url('/bg.png');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -44,7 +44,7 @@ a:hover {
 }
 
 .borrowed-books, .main, .main-page, .student-page, .book-event {
-    background-image: url('bg2.jpg');
+    background-image: url('/bg2.jpg');
     background-size: cover;
     background-position: center;
     /* background-attachment: fixed;
