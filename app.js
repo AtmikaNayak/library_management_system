@@ -89,6 +89,27 @@ app.post('/books/add', isLoggedIn, (req, res) => {
     })
 });
 
+app.get('/students/add', isLoggedIn, (req, res) => {
+    res.render("addStudent")
+});
+
+app.post('/students/add', isLoggedIn, (req, res) => {
+    const usn = req.body.usn;
+    const name = req.body.name;
+    const branch = req.body.branch;
+
+    db.run(`
+        INSERT INTO STUDENTS (usn, name, branch) VALUES(?,?,?)
+        `, [usn, name, branch], (err) => {
+        if (!err) {
+            res.redirect('/students');
+        } else {
+            console.log(err);
+            res.send("Failed to add student to the database.");
+        }
+    })
+});
+
 app.get('/books/delete/:id', isLoggedIn, (req, res) => {
     db.get(`SELECT COUNT(*) AS active_borrows FROM BORROWEDBOOKS WHERE bookid = ? AND status != 'Returned'`, [req.params.id], (err, count) => {
         if (err) {

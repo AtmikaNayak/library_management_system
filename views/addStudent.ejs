@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Student</title>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <div class="book-event">
+    <div class="form-box">
+        <h1>ADD STUDENT </h1>
+        <form action="/students/add" method="POST">
+            <input type="text" name="usn" placeholder="Enter usn" required>
+            <input type="text" name="name" placeholder="Enter student name" required>
+            <input type="text" name="branch" min="0" placeholder="Enter branch" required>
+            <button type="submit">Add</button>
+        </form>
+    </div>
+    </div>
+</body>
+</html>
