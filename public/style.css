@@ -167,6 +167,19 @@ button:hover {
     text-align: center;
 }
 
+.logo-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 35px;
+}
+
+.sidebar-logo{
+    width: 180px;    
+    height: auto;
+    object-fit: contain;
+}
+
 .main {
     margin-left: 260px;
     padding: 40px;
