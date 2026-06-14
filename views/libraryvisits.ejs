@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Visits</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+    <div class="login-container">
+        <div class="login-box">
+            <h1>LIBRARY MANAGEMENT SYSTEM</h1>
+            <h2>Student login</h2>
+            <% if(error){ %>
+                <p class="error">
+                    <%= error %>
+                </p>
+                <% } %>
+                    <form action="/libraryvisits" method="POST">
+                        <input type="text" name="usn" placeholder="Enter usn" required>
+                        <button type="submit">Login</button>
+                    </form>
+                    <a href="/">Login as a librarian</a>
+                    <% if(typeof visit !=='undefined' && visit) { %>
+
+                        <div class="visits">
+                            <% if(visit.status==='IN' ) { %>
+                                <h3>Successfully logged IN!</h3>
+                                <p>Entry Time : <%= new Date(visit.entry_time).toLocaleString() %>
+                                </p>
+                                <p>Status: Studying... </p>
+
+                                <% } else { %>
+                                    <h3>Successfully logged OUT!</h3>
+                                    <p>Entry Time : <%= new Date(visit.entry_time).toLocaleString() %>
+                                    </p>
+                                    <p>Exit Time : <%= new Date(visit.exit_time).toLocaleString() %>
+                                    </p>
+                                    <p><strong>Total Duration : <%= visit.duration %></strong></p>
+                                    <% } %>
+                        </div>
+
+                        <% } %>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Students</title>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="sidebar">
+        <h2>LIBRARY</h2>
+        <a href="/dashboard"><i class="fa-solid fa-chart-column"></i> Dashboard</a>
+        <a href="/books"> <i class="fa-solid fa-book"></i> Books</a>
+        <a href="/borrowedbooks"><i class="fa-solid fa-hand-holding-hand"></i> Borrowed books</a>
+        <a href="/students"><i class="fa-solid fa-user-graduate"></i> Students</a>
+        <a href="/logout"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+    </div>
+    <div class="student-page">
+        <h1>STUDENT MANAGEMENT</h1>
+        <div class="table-wrapper">
+        <table>
+            <tr>
+                <th>USN</th>
+                <th>Name</th>
+                <th>Branch</th>
+                <th></th>
+            </tr>
+            <% students.forEach(student => { %>
+            <tr>
+                <td><%= student.usn %></td>
+                <td><%= student.name %></td>
+                <td><%= student.branch %></td>
+                <td><a href="/students/delete/<%= student.usn %>">delete</a></td>
+            </tr>
+            <% }) %>
+        </table>
+        </div>
+    </div>
+</body>
+</html>

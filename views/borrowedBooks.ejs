@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Borrowed Books</title>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="sidebar">
+        <h2>LIBRARY</h2>
+        <a href="/dashboard"><i class="fa-solid fa-chart-column"></i> Dashboard</a>
+        <a href="/books"> <i class="fa-solid fa-book"></i> Books</a>
+        <a href="/borrowedbooks"><i class="fa-solid fa-hand-holding-hand"></i> Borrowed books</a>
+        <a href="/students"><i class="fa-solid fa-user-graduate"></i> Students</a>
+        <a href="/logout"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+    </div>
+    <div class="borrowed-books">
+        <h1>BORROWED BOOKS</h1>
+        <div class="table-wrapper">
+        <table>
+            <tr>
+                <th>USN</th>
+                <th>Book id</th>
+                <th>Book title</th>
+                <th>Borrow date</th>
+                <th>Return date</th>
+                <th>Status</th>
+                <th></th>
+            </tr>
+            <% b_books.forEach(b_book=> { %>
+                <tr>
+                    <td>
+                        <%= b_book.usn %>
+                    </td>
+                    <td>
+                        <%= b_book.bookid %>
+                    </td>
+                    <td>
+                        <%= b_book.title %>
+                    </td>
+                    <td>
+                        <%= b_book.borrow_date %>
+                    </td>
+                    <td>
+                        <%= b_book.return_date %>
+                    </td>
+                    <td>
+                        <%= b_book.status %>
+                    </td>
+                    <td>
+                        <% if(b_book.status !=='Returned' ) { %>
+                            <form action="/borrowedbooks/returned/<%= b_book.id %>" method="POST">
+                                <button type="submit">Mark as Returned</button>
+                            </form>
+                            <% } else { %>
+                                Returned
+                                <% } %>
+                    </td>
+                </tr>
+                <% }) %>
+        </table>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Books</title>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="sidebar">
+        <h2>LIBRARY</h2>
+        <a href="/dashboard"><i class="fa-solid fa-chart-column"></i> Dashboard</a>
+        <a href="/books"> <i class="fa-solid fa-book"></i> Books</a>
+        <a href="/borrowedbooks"><i class="fa-solid fa-hand-holding-hand"></i> Borrowed books</a>
+        <a href="/students"><i class="fa-solid fa-user-graduate"></i> Students</a>
+        <a href="/logout"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+    </div>
+    <div class="main-page">
+        <div class="book">
+            <h1>BOOK MANAGEMENT</h1>
+            <a href="/books/add">Add my book</a>
+        </div>
+        <div class="table-wrapper">
+        <table>
+            <tr>
+                <th>id</th>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Quantity</th>
+                <th></th>
+                <th></th>
+            </tr>
+            <% books.forEach(books=> { %>
+                <tr>
+                    <td>
+                        <%= books.id %>
+                    </td>
+                    <td>
+                        <%= books.title %>
+                    </td>
+                    <td>
+                        <%= books.author %>
+                    </td>
+                    <td>
+                        <%= books.quantity %>
+                    </td>
+                    <td>
+                        <a href="/books/editbook/<%= books.id %>">edit</a>
+                        <a href="/books/delete/<%= books.id %>">delete</a>
+                    </td>
+                    <td>
+                        <% if(books.quantity !=0){ %>
+                            <a href="/books/issue/<%= books.id %>">
+                                <button>Issue</button>
+                            </a>
+                            <% } else { %>
+                                <p>Not available</p>
+                                <% } %>
+                    </td>
+                </tr>
+                <% }) %>
+        </table>
+        </div>
+    </div>
+</body>
+
+</html>

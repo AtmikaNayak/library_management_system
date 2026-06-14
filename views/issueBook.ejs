@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Issue Book</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div class="book-event">
+    <div class="issue">
+        <h1>ISSUE BOOK : <br><%= book.title %></h1>
+        <form action="/books/issue" method="POST">
+            <input type="hidden" name="bookid" value="<%= book.id %>">
+            <input type="text" name="usn" placeholder="Enter usn" required>
+            <button type="submit">Issue</button>
+        </form>
+    </div>
+    </div>
+</body>
+</html>

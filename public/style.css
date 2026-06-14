@@ -1,0 +1,454 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #23252f 0%, #1e1e24 100%);
+    background-attachment: fixed;
+    color: #f4ebd0;
+    line-height: 1.6;
+}
+
+h1, h2, h3 {
+    color: #ffffff;
+    margin-bottom: 15px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+a {
+    color: #e07a5f;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+a:hover {
+    color: #f2cc8f;
+}
+
+.login-container, .book-event {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    background-image: url('bg.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-color: rgba(20, 20, 25, 0.5);
+    background-blend-mode: overlay;
+}
+
+.borrowed-books, .main, .main-page, .student-page, .book-event {
+    background-image: url('bg2.jpg');
+    background-size: cover;
+    background-position: center;
+    /* background-attachment: fixed;
+    background-color: rgba(35, 35, 45, 0.75); 
+    background-blend-mode: overlay; */
+}
+
+.login-box, .form-box, .issue, .card {
+    background: rgba(255, 255, 255, 0.05); 
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.login-box, .form-box, .issue {
+    padding: 40px;
+    width: 100%;
+    max-width: 450px;
+    text-align: center;
+}
+
+.form-box, .issue {
+    margin: 80px auto;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin: 20px 0;
+}
+
+input {
+    padding: 12px 15px;
+    background-color: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    border-radius: 8px;
+    font-size: 1rem;
+    outline: none;
+    transition: all 0.3s;
+}
+
+input::placeholder {
+    color: #aaa;
+}
+
+input:focus {
+    border-color: #e07a5f;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+input:disabled {
+    background-color: rgba(255, 255, 255, 0.05);
+    cursor: not-allowed;
+}
+
+button {
+    background-color: #e07a5f;
+    color: #fff;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    font-weight: bold;
+    letter-spacing: 1px;
+    transition: background-color 0.3s, transform 0.1s;
+}
+
+button:hover {
+    background-color: #d16b50;
+    transform: translateY(-2px);
+}
+
+.sidebar {
+    width: 260px;
+    background: rgba(20, 20, 25, 0.7);
+    backdrop-filter: blur(20px);
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 30px 20px;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+.sidebar h2 {
+    color: #e07a5f;
+    letter-spacing: 3px;
+    margin-bottom: 40px;
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+.sidebar a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #b5b5b5;
+    text-decoration: none;
+    padding: 14px 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    transition: all 0.2s;
+}
+
+.sidebar a:hover {
+    background-color: rgba(224, 122, 95, 0.15);
+    color: #e07a5f;
+    padding-left: 20px;
+}
+
+.sidebar i {
+    font-size: 1.2rem;
+    width: 20px;
+    text-align: center;
+}
+
+.main {
+    margin-left: 260px;
+    padding: 40px;
+    min-height: 100vh;
+}
+
+.cards {
+    display: flex;
+    gap: 25px;
+    margin-top: 40px;
+    flex-wrap: wrap;
+}
+
+.card {
+    padding: 35px 30px;
+    flex: 1;
+    min-width: 220px;
+    text-align: center;
+    border-bottom: 4px solid #e07a5f;
+    transition: transform 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card i {
+    font-size: 2.5rem;
+    color: #f2cc8f;
+    margin-bottom: 15px;
+}
+
+.card h2 {
+    font-size: 3rem;
+    margin-bottom: 5px;
+}
+
+.card p {
+    color: #e9dfd1;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.main-page, .borrowed-books, .student-page {
+    margin-left: 260px;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.main-page > h1, 
+.borrowed-books > h1, 
+.student-page > h1 {
+    width: 100%;
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.book {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.book h1 {
+    margin-bottom: 0;
+}
+
+.book > a, .borrowed-books > a, .student-page > a {
+    display: inline-block;
+    background-color: #e07a5f;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: bold;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: rgba(30, 30, 35, 0.4);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-top: 10px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+th, td {
+    padding: 16px 20px;
+    text-align: left;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+th {
+    background-color: rgba(255, 255, 255, 0.08);
+    color: #f4ebd0;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+}
+
+tr:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+td a { 
+    font-weight: 600; 
+    margin-right: 15px; 
+}
+
+td a[href*="delete"] {
+     color: #ff7d7d; 
+}
+
+td a[href*="edit"] { 
+    color: #f2cc8f;
+}
+
+td form { 
+    margin: 0;
+}
+
+td form button, td > a button {
+    padding: 8px 15px;
+    font-size: 0.85rem;
+}
+
+.error {
+    color: #ff8a80;
+    background-color: rgba(211, 47, 47, 0.2);
+    padding: 12px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    border: 1px solid rgba(211, 47, 47, 0.5);
+    width: 100%;
+}
+
+.visits {
+    margin-top: 25px;
+    padding: 20px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    text-align: left;
+    width: 100%;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.visits h3 { 
+    color: #e07a5f; 
+    text-align: center;
+}
+
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+@media screen and (max-width: 768px) {
+
+    .sidebar {
+        position: relative;
+        width: 100%;
+        height: auto;
+        border-right: none;
+        padding: 15px;
+    }
+
+    .sidebar h2 {
+        margin-bottom: 15px;
+    }
+
+    .sidebar a {
+        padding: 10px;
+        font-size: 1rem;
+    }
+
+    .main,
+    .main-page,
+    .borrowed-books,
+    .student-page {
+        margin-left: 0;
+        padding: 20px;
+    }
+
+    .cards {
+        flex-direction: column;
+    }
+
+    .card {
+        min-width: 100%;
+    }
+
+    .card h2 {
+        font-size: 2rem;
+    }
+
+    .login-box,
+    .form-box,
+    .issue {
+        padding: 25px;
+        width: 95%;
+    }
+
+    .book {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    th,
+    td {
+        padding: 12px;
+        font-size: 0.9rem;
+    }
+
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    h2 {
+        font-size: 1.4rem;
+    }
+
+    h3 {
+        font-size: 1.1rem;
+    }
+
+    button,
+    input {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 480px) {
+
+    .main,
+    .main-page,
+    .borrowed-books,
+    .student-page {
+        padding: 15px;
+    }
+
+    .login-box,
+    .form-box,
+    .issue {
+        padding: 20px;
+    }
+
+    .card {
+        padding: 20px;
+    }
+
+    .card h2 {
+        font-size: 1.8rem;
+    }
+
+    th,
+    td {
+        padding: 10px;
+        font-size: 0.8rem;
+    }
+
+    .book > a,
+    .borrowed-books > a,
+    .student-page > a {
+        width: 100%;
+        text-align: center;
+    }
+}
