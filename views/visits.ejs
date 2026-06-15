@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Borrowed Books</title>
+    <title>Library Visits</title>
     <link rel="stylesheet" href="/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
@@ -23,17 +23,16 @@
         <a href="/logout"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
     </div>
     <div class="borrowed-books">
-        <h1>BORROWED BOOKS</h1>
+        <h1>LIBRARY VISITS</h1>
         <div class="table-wrapper">
         <table>
             <tr>
                 <th>USN</th>
-                <th>Book id</th>
-                <th>Book title</th>
-                <th>Borrow date</th>
-                <th>Return date</th>
+                <th>Branch</th>
+                <th>Entry Time</th>
+                <th>Exit Time</th>
+                <th>Duration</th>
                 <th>Status</th>
-                <th></th>
             </tr>
             <% b_books.forEach(b_book=> { %>
                 <tr>
@@ -41,28 +40,27 @@
                         <%= b_book.usn %>
                     </td>
                     <td>
-                        <%= b_book.bookid %>
+                        <%= b_book.branch %>
                     </td>
                     <td>
-                        <%= b_book.title %>
+                        <%= new Date(b_book.entry_time).toLocaleTimeString('en-GB', {
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false
+    }) %>
                     </td>
                     <td>
-                        <%= b_book.borrow_date %>
+                        <%= new Date(b_book.exit_time).toLocaleTimeString('en-GB', {
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false
+    }) %>
                     </td>
                     <td>
-                        <%= b_book.return_date %>
+                        <%= b_book.duration %>
                     </td>
                     <td>
                         <%= b_book.status %>
-                    </td>
-                    <td>
-                        <% if(b_book.status !=='Returned' ) { %>
-                            <form action="/borrowedbooks/returned/<%= b_book.id %>" method="POST">
-                                <button type="submit">Mark as Returned</button>
-                            </form>
-                            <% } else { %>
-                                Returned
-                                <% } %>
                     </td>
                 </tr>
                 <% }) %>

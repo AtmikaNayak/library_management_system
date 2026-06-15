@@ -259,6 +259,19 @@ app.get('/borrowedbooks', isLoggedIn, (req, res) => {
     })
 })
 
+app.get('/visits', isLoggedIn, (req, res) => {
+    db.all(`select s.usn,s.name,s.branch,l.entry_time,l.exit_time,l.duration,l.status
+            from LIBRARYVISITS l,STUDENTS s 
+            where s.usn=l.usn`, (err, rows) => {
+        if (!err) {
+            res.render('visits', { b_books: rows })
+        } else {
+            console.log(err);
+            res.send("Failed to get visits from the database.");
+        }
+    })
+})
+
 app.post('/borrowedbooks/returned/:id', isLoggedIn, (req, res) => {
     db.run(`UPDATE BORROWEDBOOKS SET status='Returned' WHERE ID = ? AND status != 'Returned'`, [req.params.id], (err) => {
         if (err) {
