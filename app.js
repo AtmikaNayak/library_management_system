@@ -179,10 +179,10 @@ app.post("/books/issue", isLoggedIn, (req, res) => {
             if (book.quantity <= 0) return res.send("Error: This book is currently out of stock.");
             db.get(`SELECT * FROM BORROWEDBOOKS WHERE usn = ? AND bookid = ? AND status != 'Returned'`, [usn, bookid], (err, activeBorrow) => {
 
-                if (err) 
+                if (err)
                     return res.send("Database error.");
 
-                if (activeBorrow) 
+                if (activeBorrow)
                     return res.send('<script>alert("Error: This student already has a copy of this book unreturned!"); window.location.href="/books";</script>');
 
                 const today = new Date();
@@ -299,81 +299,88 @@ app.post('/borrowedbooks/returned/:id', isLoggedIn, (req, res) => {
 app.post("/libraryvisits", (req, res) => {
     const usn = req.body.usn.trim().toUpperCase();
 
-    db.get(`SELECT * FROM LIBRARYVISITS WHERE USN=? ORDER BY id DESC LIMIT 1`, [usn], (err, row) => {
-        if (err) {
-            console.log(err);
-            return res.send("Error getting status.");
+    db.get(`SELECT * FROM students WHERE usn=?`, [usn], (err, student) => {
+        if (!student) {
+            req.session.error = "Student not found (Invalid USN)";
+            return res.redirect('/libraryvisits');
         }
 
-        const cur = new Date();
-
-        if (!row || row.status !== 'IN') {
-            db.run(
-                `INSERT INTO LIBRARYVISITS (usn, entry_time, exit_time, duration, status) VALUES (?, ?, null, null, 'IN')`, [usn, cur.toISOString()], (err) => {
-                    if (err) return console.log(err);
-                    console.log(`${usn} logged IN.`);
-
-                    req.session.lastVisit = { status: 'IN', entry_time: cur.toISOString() };
-
-                    res.redirect('/libraryvisits');
-                }
-            );
-        } else {
-            const entry = new Date(row.entry_time);
-            const dur = cur - entry;
-
-            const totalMin = Math.floor(dur / (1000 * 60));
-            const totalSec = Math.floor((dur % (1000 * 60)) / 1000);
-
-            let duration;
-            if (totalMin === 0) {
-                duration = `${totalSec} seconds`;
-            } else {
-                duration = `${totalMin} mins, ${totalSec} seconds`;
+        db.get(`SELECT * FROM LIBRARYVISITS WHERE USN=? ORDER BY id DESC LIMIT 1`, [usn], (err, row) => {
+            if (err) {
+                console.log(err);
+                return res.send("Error getting status.");
             }
 
-            db.run(
-                `UPDATE LIBRARYVISITS SET exit_time=?, duration=?, status='OUT' WHERE id=?`, [cur.toISOString(), duration, row.id], (err) => {
-                    if (err) return console.log(err);
-                    console.log(`${usn} logged OUT.`);
+            const cur = new Date();
 
-                    req.session.lastVisit = {
-                        status: 'OUT',
-                        entry_time: row.entry_time,
-                        exit_time: cur.toISOString(),
-                        duration: duration
-                    };
+            if (!row || row.status !== 'IN') {
+                db.run(
+                    `INSERT INTO LIBRARYVISITS (usn, entry_time, exit_time, duration, status) VALUES (?, ?, null, null, 'IN')`, [usn, cur.toISOString()], (err) => {
+                        if (err) return console.log(err);
+                        console.log(`${usn} logged IN.`);
 
-                    res.redirect('/libraryvisits');
+                        req.session.lastVisit = { status: 'IN', entry_time: cur.toISOString() };
+
+                        res.redirect('/libraryvisits');
+                    }
+                );
+            } else {
+                const entry = new Date(row.entry_time);
+                const dur = cur - entry;
+
+                const totalMin = Math.floor(dur / (1000 * 60));
+                const totalSec = Math.floor((dur % (1000 * 60)) / 1000);
+
+                let duration;
+                if (totalMin === 0) {
+                    duration = `${totalSec} seconds`;
+                } else {
+                    duration = `${totalMin} mins, ${totalSec} seconds`;
                 }
-            );
-        }
+
+                db.run(
+                    `UPDATE LIBRARYVISITS SET exit_time=?, duration=?, status='OUT' WHERE id=?`, [cur.toISOString(), duration, row.id], (err) => {
+                        if (err) return console.log(err);
+                        console.log(`${usn} logged OUT.`);
+
+                        req.session.lastVisit = {
+                            status: 'OUT',
+                            entry_time: row.entry_time,
+                            exit_time: cur.toISOString(),
+                            duration: duration
+                        };
+
+                        res.redirect('/libraryvisits');
+                    }
+                );
+            }
+        })
     })
 })
 
 app.get("/libraryvisits", (req, res) => {
-    // db.all(`SELECT * FROM LIBRARYVISITS ORDER BY id DESC`, (err, rows) => {
-    //     if (err) {
-    //         console.log(err);
-    //         return res.send("Error loading visits.");
-    //     }
-    //     res.render('libraryvisits', {
-    //         visit: null,
-    //         error: null
-    //     });
-    // });
 
     const visitStats = req.session.lastVisit || null;
+    const errorMessage = req.session.error || null;
 
-    if (visitStats) {
+    if (visitStats || errorMessage) {
         res.set('Refresh', '4; url=/libraryvisits');
     }
 
     req.session.lastVisit = null;
+    req.session.error = null;
 
-    res.render('libraryvisits', {
-        visit: visitStats,
-        error: null
+    db.all(`SELECT * FROM LIBRARYVISITS ORDER BY id DESC`, (err, rows) => {
+        if (err) {
+            console.log(err);
+            return res.send("Error loading visits.");
+        }
+        
+        res.render('libraryvisits', {
+            visit: visitStats,
+            error: errorMessage,
+            tableData: rows
+        });
     });
 })
 
